@@ -1,0 +1,29 @@
+# ===== Vivado / FPGA build artifacts =====
+*.bit
+*.ltx
+*.log
+*.jou
+vivado_*
+.Xil/
+
+# ===== Python =====
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ===== Generated data (regenerated on demand) =====
+*.npy
+*.pth
+
+# ===== Results (plots regenerated, not stored in git) =====
+results/*
+!results/.gitkeep
+
+# ===== Traces directory =====
+traces/*
+!traces/.gitkeep
+
+# ===== OS junk =====
+.DS_Store
+Thumbs.db

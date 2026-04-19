@@ -1,0 +1,71 @@
+# =============================================================================
+# f4pga/synth_hardened.ys
+# AEGIS — Yosys Synthesis Script for Hardened AES Design (Act 3)
+# =============================================================================
+#
+# Synthesizes the fully hardened AES design with all countermeasures:
+#   - Boolean masking (masked SubBytes + MixColumns)
+#   - TRNG (ring oscillators — replaced with LUT1 black boxes for Yosys)
+#   - TRNG validator
+#   - Timing randomizer
+#   - Hardened AES core
+#
+# NOTE ON RING OSCILLATORS:
+#   The ring_oscillator_trng.v uses Xilinx-specific LUT1 primitives
+#   with INIT parameters. Yosys supports these via synth_xilinx, but
+#   the KEEP/DONT_TOUCH attributes are Vivado-specific. Yosys will
+#   synthesize the design but may optimize away the combinational loops.
+#   This is expected — on real hardware, use Vivado for the TRNG.
+#   The Yosys synthesis demonstrates that the REST of the design
+#   builds correctly with open-source tools.
+# =============================================================================
+
+# ── Read all source files ─────────────────────────────────────────────────────
+
+# Crypto modules
+read_verilog ../rtl/crypto/aes_subbytes.v
+read_verilog ../rtl/crypto/aes_shiftrows.v
+read_verilog ../rtl/crypto/aes_mixcolumns.v
+read_verilog ../rtl/crypto/aes_addroundkey.v
+read_verilog ../rtl/crypto/aes_key_expansion.v
+read_verilog ../rtl/crypto/aes_core.v
+read_verilog ../rtl/crypto/aes_core_masked.v
+read_verilog ../rtl/crypto/aes_core_hardened.v
+
+# Countermeasure modules
+read_verilog ../rtl/countermeasures/aes_subbytes_masked.v
+read_verilog ../rtl/countermeasures/aes_mixcolumns_masked.v
+read_verilog ../rtl/countermeasures/mask_refresh.v
+read_verilog ../rtl/countermeasures/ring_oscillator_trng.v
+read_verilog ../rtl/countermeasures/trng_validator.v
+read_verilog ../rtl/countermeasures/timing_randomizer.v
+
+# Interface modules
+read_verilog ../rtl/interface/uart_rx.v
+read_verilog ../rtl/interface/uart_tx.v
+read_verilog ../rtl/interface/control_fsm.v
+read_verilog ../rtl/interface/hamming_weight.v
+
+# Top-level
+read_verilog ../rtl/top/aes_hardened.v
+
+# ── Hierarchy check ──────────────────────────────────────────────────────────
+hierarchy -check -top aes_hardened
+
+# ── Synthesis ────────────────────────────────────────────────────────────────
+synth_xilinx -top aes_hardened -family xc7 -nosrl -noclkbuf -noiopad
+
+# ── Statistics ───────────────────────────────────────────────────────────────
+stat
+
+# ── Output ───────────────────────────────────────────────────────────────────
+write_json output/synth_hardened.json
+
+log
+log ═══════════════════════════════════════════════════════
+log   AEGIS — Yosys Synthesis Complete
+log   Design: aes_hardened (Act 3 Fully Hardened AES-128)
+log   Target: Xilinx 7-series (XC7S50)
+log   Output: f4pga/output/synth_hardened.json
+log ═══════════════════════════════════════════════════════
+log

@@ -1,0 +1,89 @@
+# =============================================================================
+# f4pga/synth_vulnerable.ys
+# AEGIS — Yosys Synthesis Script for Vulnerable AES Design (Act 1)
+# =============================================================================
+#
+# This is a Yosys command script (.ys) that synthesizes the Act 1 AES design
+# for the Xilinx 7-series FPGA architecture using the open-source Yosys tool.
+#
+# The synth_xilinx command performs the full synthesis flow:
+#   1. RTL elaboration and hierarchy flattening
+#   2. Technology-independent optimization
+#   3. Technology mapping to Xilinx 7-series primitives (LUT6, FDRE, etc.)
+#   4. Post-mapping optimization
+#
+# Target: XC7S50 (Spartan-7, same as Vivado flow)
+# Top module: aes_vulnerable (the Act 1 top-level)
+# =============================================================================
+
+# ── Step 1: Read all Verilog source files ─────────────────────────────────────
+#
+# Read order doesn't matter for Yosys — it resolves module references
+# after all files are loaded.  We include ALL modules in the design
+# hierarchy under aes_vulnerable.
+
+# Crypto modules
+read_verilog ../rtl/crypto/aes_subbytes.v
+read_verilog ../rtl/crypto/aes_shiftrows.v
+read_verilog ../rtl/crypto/aes_mixcolumns.v
+read_verilog ../rtl/crypto/aes_addroundkey.v
+read_verilog ../rtl/crypto/aes_key_expansion.v
+read_verilog ../rtl/crypto/aes_core.v
+
+# Interface modules
+read_verilog ../rtl/interface/uart_rx.v
+read_verilog ../rtl/interface/uart_tx.v
+read_verilog ../rtl/interface/control_fsm.v
+read_verilog ../rtl/interface/hamming_weight.v
+
+# Top-level for Act 1
+read_verilog ../rtl/top/aes_vulnerable.v
+
+# ── Step 2: Hierarchy check ──────────────────────────────────────────────────
+# Verify all modules are resolved (no missing dependencies)
+hierarchy -check -top aes_vulnerable
+
+# ── Step 3: Synthesis for Xilinx 7-series ────────────────────────────────────
+#
+# synth_xilinx performs:
+#   - proc: process always blocks into muxes and FFs
+#   - flatten: inline all submodules
+#   - opt: generic optimization passes
+#   - memory: map memories to FFs or BRAMs
+#   - techmap: map to Xilinx primitives
+#   - abc: logic optimization and LUT mapping
+#
+# -top: specify top module
+# -family: target FPGA family (xc7 for 7-series)
+# -nosrl: disable shift register inference (clearer resource count)
+# -noclkbuf: skip clock buffer insertion (we handle this manually)
+# -noiopad: skip I/O pad insertion (we handle this in XDC)
+synth_xilinx -top aes_vulnerable -family xc7 -nosrl -noclkbuf -noiopad
+
+# ── Step 4: Post-synthesis statistics ────────────────────────────────────────
+# Print resource utilization — comparable to Vivado's utilization report
+stat
+
+# ── Step 5: Write outputs ────────────────────────────────────────────────────
+
+# JSON netlist — can be consumed by nextpnr-xilinx or VPR for P&R
+write_json output/synth_vulnerable.json
+
+# Graphviz hierarchy diagram — visualize the module structure
+# (run before flatten to see the hierarchy)
+show -format dot -prefix output/hierarchy
+
+# ── Step 6: Final report ─────────────────────────────────────────────────────
+log
+log ═══════════════════════════════════════════════════════
+log   AEGIS — Yosys Synthesis Complete
+log   Design: aes_core (Act 1 Vulnerable AES-128)
+log   Target: Xilinx 7-series (XC7S50)
+log   Output: f4pga/output/synth_vulnerable.json
+log ═══════════════════════════════════════════════════════
+log
+log   This netlist can be placed and routed with:
+log     nextpnr-xilinx --chipdb xc7s50.bin --netlist synth_vulnerable.json
+log   Or with the full F4PGA flow:
+log     f4pga build --flow synth+pack+place+route+fasm+bitstream
+log
