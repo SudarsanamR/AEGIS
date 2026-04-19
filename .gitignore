@@ -1,3 +1,6 @@
+# Project spec — keep local, not in version control
+instructions.txt
+
 # ===== Vivado / FPGA build artifacts =====
 *.bit
 *.ltx
