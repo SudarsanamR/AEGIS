@@ -22,17 +22,18 @@ free/open-source tools — not just proprietary Vivado.
 ### 1. Install Yosys
 
 ```bash
-# Ubuntu / Debian
-sudo apt install yosys
+# Ubuntu / Debian (recommended)
+sudo apt update
+sudo apt install -y yosys
 
 # Conda (any OS)
 conda install -c conda-forge yosys
 
-# Windows (via Chocolatey)
-choco install yosys
-
 # macOS (via Homebrew)
 brew install yosys
+
+# Windows (via Chocolatey)
+choco install yosys
 ```
 
 ### 2. Run Synthesis
@@ -72,6 +73,11 @@ the full F4PGA toolchain:
 ### Install F4PGA
 
 ```bash
+# Install Conda (Miniconda) on Ubuntu first if needed
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+source ~/.bashrc   # or open a new terminal
+
 # Install via Conda (recommended)
 conda create -n f4pga
 conda activate f4pga

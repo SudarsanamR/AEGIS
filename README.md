@@ -8,11 +8,22 @@ AEGIS demonstrates a complete side-channel attack and defense lifecycle on FPGA.
 
 ## ⚡ Quick Start
 
+### Prerequisites (Ubuntu / Debian)
+
 ```bash
-# 1. Activate the virtual environment
+# Install Python 3 and pip if not already installed
+sudo apt update
+sudo apt install -y python3 python3-pip python3-venv
+```
+
+```bash
+# 1. Create and activate the virtual environment
 cd aegis
-python -m venv venv
-venv\Scripts\activate          # Windows
+python3 -m venv venv
+
+source venv/bin/activate        # Linux / Ubuntu / macOS
+# venv\Scripts\activate         # Windows (PowerShell/CMD)
+
 pip install -r requirements.txt
 
 # 2. Generate traces for all 3 designs
@@ -161,6 +172,13 @@ aegis/
 ## 🧪 Testing
 
 ### Verilog Testbenches
+
+#### Install Icarus Verilog (Ubuntu / Debian)
+```bash
+sudo apt update
+sudo apt install -y iverilog
+```
+
 ```bash
 # Run all testbenches with Icarus Verilog (or Vivado Simulator)
 iverilog -o sim/tb_aes_core rtl/crypto/*.v sim/tb_aes_core.v && vvp sim/tb_aes_core
@@ -169,6 +187,9 @@ iverilog -o sim/tb_trng sim/tb_ring_oscillator_trng.v rtl/countermeasures/ring_o
 
 ### Python Attacks
 ```bash
+# Activate the virtual environment first (Ubuntu / Linux)
+source venv/bin/activate
+
 # Full pipeline
 python python/trace_collection/collect_traces.py --mode simulate  # Act 1 traces
 python python/attacks/dpa_attack.py                                # DPA on unmasked
