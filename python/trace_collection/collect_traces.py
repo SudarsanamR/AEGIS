@@ -289,7 +289,10 @@ def main():
     std_hw         = float(np.std(traces))
     print(f"HW stats: min={min_hw:.2f}, max={max_hw:.2f}, std={std_hw:.2f}")
 
-    print("\nDone.  Run python/attacks/dpa_attack.py next.")
+    print("\nDone.  Next steps:")
+    print("  python python/trace_collection/simulate_masked.py    # Act 2 traces")
+    print("  python python/trace_collection/simulate_hardened.py  # Act 3 traces")
+    print("  python python/demo.py --design all --attack both     # Run all attacks")
 
 
 if __name__ == "__main__":

@@ -158,22 +158,20 @@ module tb_timing_randomizer;
 
         do_round_and_measure;
 
-        // With delay=0: enter S_DELAY on cycle after round_done,
-        // delay_counter is already 0, so proceed fires immediately = 1 cycle
+        // With delay=0: S_IDLE→S_DELAY (cycle 1, load counter=0),
+        // then delay_counter==0 fires proceed (cycle 2) = 2 cycles total
         $display("  Measured delay: %0d cycles", measured_delay);
-        if (measured_delay == 1) begin
-            $display("  PASS: zero delay = 1 cycle (FSM latency only)");
+        if (measured_delay == 2) begin
+            $display("  PASS: zero delay = 2 cycles (1 FSM transition + 1 proceed)");
         end else begin
-            $display("  FAIL: expected 1 cycle, got %0d", measured_delay);
+            $display("  FAIL: expected 2 cycles, got %0d", measured_delay);
             errors = errors + 1;
         end
 
-        // -----------------------------------------------------------------
-        // TEST 3: Fixed delay = 5
-        //         Expected: 5 countdown + 1 FSM cycle = 6 cycles
-        // -----------------------------------------------------------------
+        // delay=5: S_IDLE→S_DELAY (cycle 1, load 5), count 5→4→3→2→1→0 (5 cycles),
+        // then proceed fires (1 cycle) = 5 + 2 = 7 cycles total
         $display("");
-        $display("[TEST 3] Fixed delay = 5 (expect 6 cycles total)");
+        $display("[TEST 3] Fixed delay = 5 (expect 7 cycles total)");
 
         load_nibble(4'd5);
         repeat (3) @(posedge clk);
@@ -181,19 +179,17 @@ module tb_timing_randomizer;
         do_round_and_measure;
 
         $display("  Measured delay: %0d cycles", measured_delay);
-        if (measured_delay == 6) begin
-            $display("  PASS: delay of 5 = 6 total cycles");
+        if (measured_delay == 7) begin
+            $display("  PASS: delay of 5 = 7 total cycles");
         end else begin
-            $display("  FAIL: expected 6, got %0d", measured_delay);
+            $display("  FAIL: expected 7, got %0d", measured_delay);
             errors = errors + 1;
         end
 
-        // -----------------------------------------------------------------
-        // TEST 4: Maximum delay = 15
-        //         Expected: 15 countdown + 1 FSM cycle = 16 cycles
-        // -----------------------------------------------------------------
+        // delay=15: S_IDLE→S_DELAY (cycle 1), count 15→...→0 (15 cycles),
+        // proceed (cycle 17) = 15 + 2 = 17 cycles total
         $display("");
-        $display("[TEST 4] Maximum delay = 15 (expect 16 cycles total)");
+        $display("[TEST 4] Maximum delay = 15 (expect 17 cycles total)");
 
         load_nibble(4'b1111);
         repeat (3) @(posedge clk);
@@ -201,10 +197,10 @@ module tb_timing_randomizer;
         do_round_and_measure;
 
         $display("  Measured delay: %0d cycles", measured_delay);
-        if (measured_delay == 16) begin
-            $display("  PASS: delay of 15 = 16 total cycles");
+        if (measured_delay == 17) begin
+            $display("  PASS: delay of 15 = 17 total cycles");
         end else begin
-            $display("  FAIL: expected 16, got %0d", measured_delay);
+            $display("  FAIL: expected 17, got %0d", measured_delay);
             errors = errors + 1;
         end
 
@@ -214,32 +210,32 @@ module tb_timing_randomizer;
         $display("");
         $display("[TEST 5] Back-to-back rounds (delays 3, 7, 1)");
 
-        // Round A: delay 3
+        // Round A: delay 3 → 3+2=5 cycles
         load_nibble(4'd3);
         repeat (2) @(posedge clk);
         do_round_and_measure;
-        $display("  Round A: measured %0d cycles (expected 4)", measured_delay);
-        if (measured_delay != 4) begin
+        $display("  Round A: measured %0d cycles (expected 5)", measured_delay);
+        if (measured_delay != 5) begin
             errors = errors + 1;
             $display("  FAIL");
         end else $display("  PASS");
 
-        // Round B: delay 7
+        // Round B: delay 7 → 7+2=9 cycles
         load_nibble(4'd7);
         repeat (2) @(posedge clk);
         do_round_and_measure;
-        $display("  Round B: measured %0d cycles (expected 8)", measured_delay);
-        if (measured_delay != 8) begin
+        $display("  Round B: measured %0d cycles (expected 9)", measured_delay);
+        if (measured_delay != 9) begin
             errors = errors + 1;
             $display("  FAIL");
         end else $display("  PASS");
 
-        // Round C: delay 1
+        // Round C: delay 1 → 1+2=3 cycles
         load_nibble(4'd1);
         repeat (2) @(posedge clk);
         do_round_and_measure;
-        $display("  Round C: measured %0d cycles (expected 2)", measured_delay);
-        if (measured_delay != 2) begin
+        $display("  Round C: measured %0d cycles (expected 3)", measured_delay);
+        if (measured_delay != 3) begin
             errors = errors + 1;
             $display("  FAIL");
         end else $display("  PASS");

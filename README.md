@@ -17,6 +17,9 @@ sudo apt install -y python3 python3-pip python3-venv
 ```
 
 ```bash
+# NOTE: Always run scripts with 'python' prefix — never run them directly
+# (e.g. python/attacks/dpa_attack.py alone will give "Permission denied")
+
 # 1. Create and activate the virtual environment
 cd aegis
 python3 -m venv venv
@@ -26,10 +29,10 @@ source venv/bin/activate        # Linux / Ubuntu / macOS
 
 pip install -r requirements.txt
 
-# 2. Generate traces for all 3 designs
-python python/trace_collection/collect_traces.py --mode simulate
-python python/trace_collection/simulate_masked.py
-python python/trace_collection/simulate_hardened.py
+# 2. Generate traces for all 3 designs (run ALL three before proceeding)
+python python/trace_collection/collect_traces.py --mode simulate  # Act 1: unmasked
+python python/trace_collection/simulate_masked.py                  # Act 2: masked
+python python/trace_collection/simulate_hardened.py                # Act 3: hardened
 
 # 3. Run the full demo (DPA + Neural on all designs)
 python python/demo.py --design all --attack both

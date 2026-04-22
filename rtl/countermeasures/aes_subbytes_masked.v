@@ -51,7 +51,7 @@ module aes_subbytes_masked (
     // AES S-Box — NIST FIPS 197, Figure 7
     // Indexed as: sbox[byte_value] → SubBytes(byte_value)
     // =========================================================================
-    function [7:0] sbox;
+    function automatic [7:0] sbox;
         input [7:0] in;
         case (in)
             8'h00: sbox = 8'h63; 8'h01: sbox = 8'h7c; 8'h02: sbox = 8'h77;

@@ -61,7 +61,7 @@ module aes_mixcolumns_masked (
     //   If MSB=1, shift left and XOR with 0x1b (low 8 bits of 0x11b).
     //   If MSB=0, shift left only.
     // =========================================================================
-    function [7:0] xtime;
+    function automatic [7:0] xtime;
         input [7:0] b;
         // Ternary: if b[7] set, reduce; otherwise plain shift.
         xtime = b[7] ? ((b << 1) ^ 8'h1b) : (b << 1);
@@ -83,7 +83,7 @@ module aes_mixcolumns_masked (
     // the countermeasures/ directory does not depend on rtl/crypto/ at
     // instantiation time. Vivado elaboration order can vary.
     // =========================================================================
-    function [31:0] mix_col;
+    function automatic [31:0] mix_col;
         input [31:0] col; // {row0[7:0], row1[7:0], row2[7:0], row3[7:0]}
         reg [7:0] b0, b1, b2, b3;
         reg [7:0] x0, x1, x2, x3; // xtime of each byte

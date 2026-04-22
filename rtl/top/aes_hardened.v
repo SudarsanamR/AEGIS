@@ -90,13 +90,10 @@ module aes_hardened (
     // =========================================================================
     // Clock divider: 100MHz → 50MHz (identical to aes_masked.v)
     // =========================================================================
-    reg clk_div_reg;
+    reg clk_div_reg = 1'b0;
 
     always @(posedge clk) begin
-        if (rst)
-            clk_div_reg <= 1'b0;
-        else
-            clk_div_reg <= ~clk_div_reg;
+        clk_div_reg <= ~clk_div_reg;
     end
 
     wire clk_aes;
