@@ -12,7 +12,7 @@
 //   1. Full protocol loopback with NIST vector:
 //      PT  = 00112233445566778899aabbccddeeff
 //      Key = 000102030405060708090a0b0c0d0e0f
-//      CT  = 69c4e0d86a7b04300d8a2611689e2c00  (verified NIST result)
+//      CT  = 69c4e0d86a7b0430d8cdb78070b4c55a  (verified NIST result)
 //      HW  = known value from mock AES model
 //   2. Second encryption — verify FSM returns to WAIT_DATA correctly
 //   3. Verify led_busy toggles correctly (low in WAIT_DATA, high during work)
@@ -108,7 +108,7 @@ module tb_control_fsm;
             // Simulate ~12 clock cycles of AES computation
             repeat(12) @(posedge clk);
             // Return NIST ciphertext regardless of input (model is simplified)
-            aes_ciphertext <= 128'h69c4e0d8_6a7b0430_0d8a2611_689e2c00;
+            aes_ciphertext <= 128'h69c4e0d8_6a7b0430_d8cdb780_70b4c55a;
             aes_done <= 1'b1;
             @(posedge clk);
             aes_done <= 1'b0;
@@ -268,7 +268,7 @@ module tb_control_fsm;
             reg [127:0] expected_ct;
             reg [127:0] got_ct;
             integer     m;
-            expected_ct = 128'h69c4e0d8_6a7b0430_0d8a2611_689e2c00;
+            expected_ct = 128'h69c4e0d8_6a7b0430_d8cdb780_70b4c55a;
             got_ct = 128'd0;
             for (m = 0; m < 16; m = m + 1)
                 got_ct[(127 - m*8) -: 8] = tx_captured[m];
@@ -278,7 +278,7 @@ module tb_control_fsm;
                          got_ct, expected_ct);
                 fail_count = fail_count + 1;
             end else begin
-                $display("PASS [Ciphertext]: 69c4e0d86a7b04300d8a2611689e2c00");
+                $display("PASS [Ciphertext]: 69c4e0d86a7b0430d8cdb78070b4c55a");
                 pass_count = pass_count + 1;
             end
         end

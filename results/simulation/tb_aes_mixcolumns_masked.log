@@ -1,0 +1,38 @@
+Time resolution is 1 ps
+--- Group 1: NIST vector (zero mask) ---
+PASS  Test 1 [linearity]: m_in=00  out=5f72641557f5bc92f7be3b291db9f91a
+PASS  Test 1 [mask_out=mask_in=00]
+PASS  NIST col0 = 5f726415
+PASS  NIST full MixColumns vector
+--- Group 2: Linearity (various masks) ---
+PASS  Test 2 [linearity]: m_in=aa  out=f5d8cebffd5f16385d149183b71353b0
+PASS  Test 2 [mask_out=mask_in=aa]
+PASS  Test 3 [linearity]: m_in=ff  out=a08d9beaa80a436d0841c4d6e24606e5
+PASS  Test 3 [mask_out=mask_in=ff]
+PASS  Test 4 [linearity]: m_in=3c  out=634e58296bc980aecb8207152185c526
+PASS  Test 4 [mask_out=mask_in=3c]
+PASS  Test 5 [linearity]: m_in=55  out=4ffc6bfac713d73310ba54fe9832dc76
+PASS  Test 5 [mask_out=mask_in=55]
+PASS  Test 6 [linearity]: m_in=01  out=abababababababab5454545454545454
+PASS  Test 6 [mask_out=mask_in=01]
+--- Group 3: Edge cases ---
+PASS  Test 7 [linearity]: m_in=00  out=00000000000000000000000000000000
+PASS  Test 7 [mask_out=mask_in=00]
+PASS  Test 8 [linearity]: m_in=00  out=ffffffffffffffffffffffffffffffff
+PASS  Test 8 [mask_out=mask_in=00]
+PASS  Test 8: MC(FF*16) = FF*16 confirmed
+PASS  Test 9 [linearity]: m_in=ff  out=00000000000000000000000000000000
+PASS  Test 9 [mask_out=mask_in=ff]
+PASS  Test 10 [linearity]: m_in=00  out=20700050804040c00000000000000000
+PASS  Test 10 [mask_out=mask_in=00]
+--- Group 4: mask_out passthrough sweep ---
+PASS  mask sweep: mask_in=00 → mask_out=00
+PASS  mask sweep: mask_in=01 → mask_out=01
+PASS  mask sweep: mask_in=7f → mask_out=7f
+PASS  mask sweep: mask_in=80 → mask_out=80
+PASS  mask sweep: mask_in=fe → mask_out=fe
+PASS  mask sweep: mask_in=ff → mask_out=ff
+----------------------------------------
+ALL TESTS PASSED — aes_mixcolumns_masked OK
+----------------------------------------
+$finish called at time : 161 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_mixcolumns_masked.v" Line 274

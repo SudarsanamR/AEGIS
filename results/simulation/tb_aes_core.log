@@ -1,0 +1,67 @@
+Time resolution is 1 ps
+========================================
+AES Core Testbench
+========================================
+Testing complete AES-128 encryption
+
+========================================
+Test 1: NIST FIPS 197 Appendix C.1
+========================================
+Plaintext:  00112233445566778899aabbccddeeff
+Cipher Key: 000102030405060708090a0b0c0d0e0f
+
+Encryption completed in 12 cycles
+
+Expected Ciphertext: 69c4e0d86a7b0430d8cdb78070b4c55a
+Got Ciphertext:      69c4e0d86a7b0430d8cdb78070b4c55a
+PASS: NIST test vector encryption correct!
+
+========================================
+Test 2: All Zeros Plaintext
+========================================
+Plaintext:  00000000000000000000000000000000
+Cipher Key: 00000000000000000000000000000000
+
+Encryption completed in 12 cycles
+
+Expected Ciphertext: 66e94bd4ef8a2c3b884cfa59ca342b2e
+Got Ciphertext:      66e94bd4ef8a2c3b884cfa59ca342b2e
+PASS: All zeros encryption correct!
+
+========================================
+Test 3: All Ones Plaintext
+========================================
+Plaintext:  ffffffffffffffffffffffffffffffff
+Cipher Key: 00000000000000000000000000000000
+
+Encryption completed in 12 cycles
+
+Expected Ciphertext: 3f5b8cc9ea855a0afa7347d23e8d664e
+Got Ciphertext:      3f5b8cc9ea855a0afa7347d23e8d664e
+PASS: All ones encryption correct!
+
+========================================
+Test 4: Multiple Sequential Encryptions
+========================================
+Testing that core can be reused...
+
+First encryption: PASS
+Second encryption: PASS (completed in 12 cycles)
+  Ciphertext: 1b872378795f4ffd772855fc87ca964d
+
+========================================
+ALL TESTS PASSED
+AES Core is functionally correct!
+========================================
+
+MILESTONE ACHIEVED:
+You now have a working AES-128 cipher!
+Next: Add UART interface and system integration
+========================================
+$finish called at time : 905 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_core.v" Line 298
+
+========================================
+SIMULATION TIMEOUT
+Testbench exceeded 100us
+========================================
+$finish called at time : 100 us : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_core.v" Line 311

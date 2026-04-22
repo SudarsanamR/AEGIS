@@ -1,0 +1,37 @@
+Time resolution is 1 ps
+========================================
+AES MixColumns Testbench
+========================================
+
+Test 1: NIST FIPS 197 Round 1 MixColumns
+  PASS:                      NIST round-1 MixColumns
+
+Test 2: All-Zero Input
+  PASS:            all-zero state -> all-zero output
+
+Test 3: xtime Reduction (0x80 -> 0x1b, MSB detection)
+  PASS:          xtime(0x80)=0x1b GF reduction fires
+
+Test 4: MDS matrix col0: [01,00,00,00] -> [02,01,01,03]
+  PASS:      unit vec [01,00,00,00] -> [02,01,01,03]
+
+Test 5: MDS matrix col1: [00,01,00,00] -> [03,02,01,01]
+  PASS:      unit vec [00,01,00,00] -> [03,02,01,01]
+
+Test 6: FIPS-197 Appendix B: [d4,bf,5d,30] -> [04,66,81,e5]
+  PASS:  FIPS-197 App-B [d4,bf,5d,30]->[04,66,81,e5]
+
+Test 7: GF Linearity MC(a^b) == MC(a) ^ MC(b)
+  PASS: GF linearity: MC(a^b) == MC(a)^MC(b)
+
+Test 8: Explicit GF check [57,13,57,13] -> [df,9b,df,9b]
+  PASS:      GF check [57,13,57,13] -> [df,9b,df,9b]
+
+Test 9: Mixed MSB [aa,55,aa,55] -> [4f,b0,4f,b0]
+  PASS:     mixed MSB [aa,55,aa,55] -> [4f,b0,4f,b0]
+
+========================================
+ALL TESTS PASSED
+MixColumns module is verified and ready
+========================================
+$finish called at time : 110 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_mixcolumns.v" Line 201

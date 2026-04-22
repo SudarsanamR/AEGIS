@@ -1,0 +1,31 @@
+Time resolution is 1 ps
+========================================
+AES AddRoundKey Testbench
+========================================
+
+Test 1: NIST Initial AddRoundKey
+  PASS: Initial AddRoundKey correct
+
+Test 2: NIST Round 1 AddRoundKey
+  PASS: Round 1 AddRoundKey correct
+
+Test 3: XOR Identity (State XOR 0 = State)
+  PASS: XOR identity holds (State XOR 0 = State)
+
+Test 4: XOR Self-Inverse (State XOR State = 0)
+  PASS: XOR self-inverse holds (State XOR State = 0)
+
+Test 5: All Ones XOR All Ones
+  PASS: All ones XOR all ones = zero
+
+Test 6: Bit Inversion (State XOR 0xFF...FF = NOT State)
+  PASS: Bit inversion correct (XOR with all 1's = NOT)
+
+Test 7: Alternating Bits (0xAA XOR 0x55)
+  PASS: Alternating bits XOR correct (0xAA XOR 0x55 = 0xFF)
+
+========================================
+ALL TESTS PASSED
+AddRoundKey module is verified and ready
+========================================
+$finish called at time : 70 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_addroundkey.v" Line 184

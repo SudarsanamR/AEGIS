@@ -1,0 +1,35 @@
+Time resolution is 1 ps
+--- Group 1: Reset behaviour ---
+PASS  G1.1: mask_out=0xAC during reset
+PASS  G1.2: mask_out follows seed during reset
+PASS  G1.3a: mask_out=0xAC loaded while rst=1
+PASS  G1.3b: mask_out=0xAC stable after rst release
+--- Group 2: Deterministic sequence ---
+PASS  G2 step  0: 0xac
+PASS  G2 step  1: 0x59
+PASS  G2 step  2: 0xb2
+PASS  G2 step  3: 0x65
+PASS  G2 step  4: 0xcb
+PASS  G2 step  5: 0x96
+PASS  G2 step  6: 0x2c
+PASS  G2 step  7: 0x58
+PASS  G2 step  8: 0xb0
+PASS  G2 step  9: 0x61
+PASS  G2 step 10: 0xc3
+PASS  G2 step 11: 0x87
+PASS  G2 step 12: 0x0f
+PASS  G2 step 13: 0x1f
+PASS  G2 step 14: 0x3e
+PASS  G2 step 15: 0x7d
+--- Group 3: Enable gating ---
+PASS  G3: mask_out stable for 5 idle cycles (0x7d)
+PASS  G3: advance after idle → 0xfb
+--- Group 4: Re-seed during operation ---
+PASS  G4.1: re-seed to 0x33
+PASS  G4.2: first step from 0x33 = 0x66
+--- Group 5: Full 255-step period test ---
+PASS  G5: 255 unique non-zero values, period=255, wraps to 0xAC
+----------------------------------------
+ALL TESTS PASSED — mask_refresh OK
+----------------------------------------
+$finish called at time : 2856 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_mask_refresh.v" Line 317

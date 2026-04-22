@@ -253,6 +253,7 @@ module tb_timing_randomizer;
 
         // Feed bits: 1, 0, 1, 1 → nibble should be 4'b1011 = 11
         load_nibble(4'b1011);
+        repeat (2) @(posedge clk);
 
         if (uut.random_nibble == 4'b1011) begin
             $display("  PASS: random_nibble = 4'b%04b (expected 1011)",

@@ -1,0 +1,43 @@
+Time resolution is 1 ps
+===========================================================
+  AEGIS — tb_aes_core_hardened
+  Hardened AES: masking + TRNG seed + timing jitter
+===========================================================
+
+[TEST 1] NIST test vector with TRNG seed = 0xAC
+  Ciphertext: 69c4e0d86a7b0430d8cdb78070b4c55a
+  Expected:   69c4e0d86a7b0430d8cdb78070b4c55a
+  Cycles:     120
+  PASS: correct ciphertext
+
+[TEST 2] Same plaintext/key, 10 different TRNG seeds
+  Seed 0x17: PASS (cycles=112)
+  Seed 0x2e: PASS (cycles=124)
+  Seed 0x45: PASS (cycles=112)
+  Seed 0x5c: PASS (cycles=84)
+  Seed 0x73: PASS (cycles=99)
+  Seed 0x8a: PASS (cycles=116)
+  Seed 0xa1: PASS (cycles=129)
+  Seed 0xb8: PASS (cycles=103)
+  Seed 0xcf: PASS (cycles=136)
+  Seed 0xe6: PASS (cycles=111)
+  Cycle range: 84 to 136 (jitter working if range > 0)
+  PASS: variable latency confirms timing jitter
+
+[TEST 3] Back-to-back encryptions (no gap)
+  Encryption 1: PASS (cycles=100)
+  Encryption 2: PASS (cycles=97)
+
+[TEST 4] Different plaintext (all zeros)
+  Plaintext:  00000000000000000000000000000000
+  Ciphertext: c6a13b37878f5b826f4f8162a1c8d879
+  Cycles:     112
+  INFO: no reference CT for this input — structural check only
+
+===========================================================
+  ALL TESTS PASSED
+  Hardened AES produces correct ciphertext with:
+    - TRNG-seeded boolean masking
+    - Random inter-round timing jitter
+===========================================================
+$finish called at time : 19625 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_core_hardened.v" Line 300

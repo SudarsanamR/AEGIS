@@ -1,0 +1,23 @@
+Time resolution is 1 ps
+PASS  Test 1: m_in=00 m_out=00  out=63636363636363636363636363636363
+PASS  Test 2: m_in=00 m_out=00  out=63cab7040953d051cd60e0e7ba70e18c
+PASS  Test 3: m_in=aa m_out=55  out=369fe2515c0685049835b5b2ef25b4d9
+PASS  Test 4: m_in=ff m_out=00  out=63cab7040953d051cd60e0e7ba70e18c
+PASS  Test 5: m_in=00 m_out=ff  out=9c3548fbf6ac2fae329f1f18458f1e73
+PASS  Test 6: m_in=3c m_out=3c  out=21a992e34887c892401a52b99b5e81e3
+PASS  Test 7: m_in=01 m_out=02  out=14141414141414141414141414141414
+PASS  Test 8: m_in=c3 m_out=7e  out=d2d2d2d2d2d2d2d28282828282828282
+PASS  Test 9: m_in=ff m_out=00  out=16161616161616161616161616161616
+PASS  Test 10: m_in=ff m_out=ff  out=e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9e9
+PASS  Test 11: m_in=42 m_out=17  out=74747474747474747474747474747474
+PASS  Test 12: m_in=00 m_out=00  out=d4636363636363636363636363636363
+PASS  Test 13: m_in=77 m_out=77  out=14bdc0737e24a726ba179790cd0796fb
+PASS  Test 14: m_in=b5 m_out=4a  out=3ce19db4612d4b7a8f2521b8313d3629
+PASS  Test 15 byte0=63
+PASS  Test 15 byte1=ca
+PASS  Test 15 byte2=b7
+PASS  Test 15 byte4=09
+----------------------------------------
+ALL TESTS PASSED — aes_subbytes_masked OK
+----------------------------------------
+$finish called at time : 150 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_subbytes_masked.v" Line 341

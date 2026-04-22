@@ -6,8 +6,11 @@ instructions.txt
 *.ltx
 *.log
 *.jou
+*.pb
+*.str
 vivado_*
 .Xil/
+aegis_vivado/
 
 # ===== Python =====
 __pycache__/
@@ -19,8 +22,13 @@ venv/
 *.npy
 *.pth
 
-# ===== Results (plots regenerated, not stored in git) =====
-results/*
+# Results - ignore generated plots, keep simulation logs
+results/*.png
+results/final_demo/
+results/demo/
+!results/simulation/
+!results/simulation/*.log
+!results/simulation/SUMMARY.txt
 !results/.gitkeep
 
 # ===== Traces directory =====

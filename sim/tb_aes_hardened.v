@@ -161,7 +161,7 @@ module tb_aes_hardened;
         $display("");
         $display("===========================================================");
         if (errors == 0) begin
-            $display("  ALL STRUCTURAL TESTS PASSED");
+            $display("  ALL TESTS PASSED (structural only)");
             $display("");
             $display("  NOTE: Full UART encryption test requires entropy_valid=1.");
             $display("  In simulation, ring oscillators produce X, so the TRNG");

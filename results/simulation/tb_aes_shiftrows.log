@@ -1,0 +1,31 @@
+Time resolution is 1 ps
+========================================
+AES ShiftRows Testbench
+========================================
+
+Test 1: NIST FIPS 197 Round 1 ShiftRows
+  PASS:                   NIST round-1 ShiftRows
+
+Test 2: All-Zero Input
+  PASS:        all-zero input -> all-zero output
+
+Test 3: All-Ones Input
+  PASS:        all-ones input -> all-ones output
+
+Test 4: Row-0 Isolation (shift-0, must be unchanged)
+  PASS:                 row0 unchanged (shift 0)
+
+Test 5: Row-1 Isolation (shift-1)
+  PASS:              row1 rotates left by 1 byte
+
+Test 6: Row-2 Isolation (shift-2)
+  PASS:             row2 rotates left by 2 bytes
+
+Test 7: Row-3 Isolation (shift-3 = right-rotate-1)
+  PASS:   row3 rotates left by 3 bytes (right-1)
+
+========================================
+ALL TESTS PASSED
+ShiftRows module is verified and ready
+========================================
+$finish called at time : 70 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_shiftrows.v" Line 183

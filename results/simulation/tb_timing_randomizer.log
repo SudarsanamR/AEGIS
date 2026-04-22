@@ -1,0 +1,44 @@
+Time resolution is 1 ps
+===========================================================
+  AEGIS — tb_timing_randomizer
+  Timing jitter insertion between AES rounds
+===========================================================
+
+[TEST 1] Reset state
+  PASS: proceed = 0 during reset
+  PASS: jitter_active = 0 during reset
+
+[TEST 2] Zero delay (random_nibble = 0)
+  Measured delay: 2 cycles
+  PASS: zero delay = 2 cycles (1 FSM transition + 1 proceed)
+
+[TEST 3] Fixed delay = 5 (expect 7 cycles total)
+  Measured delay: 7 cycles
+  PASS: delay of 5 = 7 total cycles
+
+[TEST 4] Maximum delay = 15 (expect 17 cycles total)
+  Measured delay: 17 cycles
+  PASS: delay of 15 = 17 total cycles
+
+[TEST 5] Back-to-back rounds (delays 3, 7, 1)
+  Round A: measured 5 cycles (expected 5)
+  PASS
+  Round B: measured 9 cycles (expected 9)
+  PASS
+  Round C: measured 3 cycles (expected 3)
+  PASS
+
+[TEST 6] TRNG bit accumulation
+  PASS: random_nibble = 4'b1011 (expected 1011)
+
+[TEST 7] Proceed pulse width
+  PASS: proceed pulse is exactly 1 cycle wide
+
+[TEST 8] jitter_active during countdown
+  PASS: jitter_active asserted during countdown
+  PASS: jitter_active cleared after proceed
+
+===========================================================
+  ALL TESTS PASSED
+===========================================================
+$finish called at time : 1775 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_timing_randomizer.v" Line 352

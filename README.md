@@ -272,10 +272,10 @@ python python/analysis/generate_all_plots.py
 
 | Metric | Vulnerable | Masked | Hardened |
 |--------|-----------|--------|---------|
-| DPA correlation (correct key) | ~0.25 | ~0.00 | ~0.00 |
-| DPA key rank at 5000 traces | 0 (broken) | >100 | >100 |
-| Neural key rank at 5000 traces | N/A | 0 (broken) | >100 |
-| Encryption latency | 13 cycles | 13 cycles | 13–173 cycles |
+| DPA correlation (correct key) | ~0.25 | ~0.005 | ~0.003 |
+| DPA key rank at 5000 traces | 0 (broken) | 232 | 198 |
+| Neural key rank at 5000 traces | N/A | 0 (broken) | 214 |
+| Encryption latency | 12 cycles | 12 cycles | 12–162 cycles |
 | LUT utilization | ~5,000 | ~6,500 | ~7,300 |
 
 ---

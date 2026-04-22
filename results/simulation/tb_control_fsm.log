@@ -1,0 +1,14 @@
+Time resolution is 1 ps
+PASS [Idle]: led_busy=0 in WAIT_DATA
+INFO: Sending NIST vector frame...
+PASS [Busy]: led_busy asserted during encryption
+PASS [Ciphertext]: 69c4e0d86a7b0430d8cdb78070b4c55a
+PASS [HW byte]: HW=58 transmitted correctly
+PASS [Return to WAIT_DATA]: led_busy deasserted
+INFO: Sending second frame to verify FSM reset...
+PASS [Second frame]: FSM completed second encryption
+─────────────────────────────────────
+Results: 6 PASSED, 0 FAILED
+ALL TESTS PASSED ✓
+─────────────────────────────────────
+$finish called at time : 9335 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_control_fsm.v" Line 331

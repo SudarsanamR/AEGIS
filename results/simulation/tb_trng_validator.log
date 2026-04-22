@@ -1,0 +1,39 @@
+Time resolution is 1 ps
+===========================================================
+  AEGIS — tb_trng_validator
+  Entropy validation with 10,000-bit window
+===========================================================
+
+[TEST 1] Reset state: entropy_valid = 0
+  PASS: entropy_valid = 0 after reset
+
+[TEST 2] Healthy bitstream: 5000 ones / 10000 bits (50%)
+  PASS: entropy_valid = 1 (healthy TRNG accepted)
+
+[TEST 3] Biased bitstream: 10000 ones / 10000 bits (100%)
+  PASS: entropy_valid = 0 (biased TRNG rejected)
+
+[TEST 4] Stuck-at-zero: 0 ones / 10000 bits (0%)
+  PASS: entropy_valid = 0 (stuck-at-zero rejected)
+
+[TEST 5] Marginal pass: 4500 ones / 10000 bits (45%)
+  PASS: entropy_valid = 1 (45% boundary accepted)
+
+[TEST 6] Marginal pass: 5500 ones / 10000 bits (55%)
+  PASS: entropy_valid = 1 (55% boundary accepted)
+
+[TEST 7] Marginal fail: 4499 ones / 10000 bits (44.99%)
+  PASS: entropy_valid = 0 (just under 45% rejected)
+
+[TEST 8] Passthrough gating
+  PASS: trng_valid_out gated off when entropy_valid = 0
+  PASS: trng_valid_out passes through when entropy_valid = 1
+  PASS: trng_bit_out mirrors bit_in
+
+[TEST 9] Recovery after failure
+  PASS: entropy_valid recovers to 1 after healthy window
+
+===========================================================
+  ALL TESTS PASSED
+===========================================================
+$finish called at time : 1800615 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_trng_validator.v" Line 313

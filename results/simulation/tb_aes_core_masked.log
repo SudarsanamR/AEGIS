@@ -1,0 +1,11 @@
+Time resolution is 1 ps
+PASS  Test 1: ct=69c4e0d86a7b0430d8cdb78070b4c55a
+PASS  Test 2: ct=66e94bd4ef8a2c3b884cfa59ca342b2e
+PASS  Test 3: ct=3f5b8cc9ea855a0afa7347d23e8d664e
+PASS  Test 4: ct=69c4e0d86a7b0430d8cdb78070b4c55a
+PASS  Test 5: done deasserts after one cycle
+PASS  Test 6: latency=12 cycles
+----------------------------------------
+ALL TESTS PASSED — aes_core_masked OK
+----------------------------------------
+$finish called at time : 936 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_core_masked.v" Line 222

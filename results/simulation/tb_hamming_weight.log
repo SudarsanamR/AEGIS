@@ -1,0 +1,17 @@
+Time resolution is 1 ps
+PASS [All zeros (HW=0)]: HW=0
+PASS [All ones (HW=128)]: HW=128
+PASS [0xAA pattern (HW=64)]: HW=64
+PASS [0x55 pattern (HW=64)]: HW=64
+PASS [Single bit set (HW=1)]: HW=1
+PASS [One byte 0xFF (HW=8)]: HW=8
+INFO [NIST vector]: ref_hw computed as 58
+PASS [NIST FIPS-197 SubBytes output]: HW=58
+PASS [Reset clears hw_valid]
+─────────────────────────────────────
+Results: 8 PASSED, 0 FAILED
+ALL TESTS PASSED ✓
+─────────────────────────────────────
+$finish called at time : 426 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_hamming_weight.v" Line 234
+TIMEOUT: simulation exceeded 50us — aborting
+$finish called at time : 50 us : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_hamming_weight.v" Line 243

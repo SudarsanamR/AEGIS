@@ -128,7 +128,7 @@ module tb_aes_core_hardened;
     // Key:        000102030405060708090a0b0c0d0e0f
     localparam [127:0] NIST_PT  = 128'h00112233445566778899aabbccddeeff;
     localparam [127:0] NIST_KEY = 128'h000102030405060708090a0b0c0d0e0f;
-    localparam [127:0] NIST_CT  = 128'h69c4e0d86a7b04300d8a2611689e2c00;
+    localparam [127:0] NIST_CT  = 128'h69c4e0d86a7b0430d8cdb78070b4c55a;
 
     // =========================================================================
     // Helper task: run one encryption and measure cycle count

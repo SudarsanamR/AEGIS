@@ -1,0 +1,46 @@
+Time resolution is 1 ps
+===========================================================
+  AEGIS — tb_aes_hardened
+  System-level hardened top verification
+===========================================================
+
+[TEST 1] Reset behavior
+  PASS: led_busy = 0 during reset
+  INFO: led_trng_valid = 0 (expected 0 — TRNG not yet validated)
+
+[TEST 2] Clock divider (100MHz → 50MHz)
+  PASS: clk_aes is active (0)
+
+[TEST 3] TRNG subsystem structural presence
+  INFO: TRNG osc_out = xxxxxxxx (X expected in simulation)
+  INFO: entropy_valid = 0 (0 expected — ROs are X)
+  INFO: validator bit_counter = 2
+  PASS: TRNG subsystem structurally instantiated
+
+[TEST 4] Submodule presence check
+  u_uart_rx:       present
+  u_uart_tx:       present
+  u_trng:          present (ring_oscillator_trng)
+  u_validator:     present (trng_validator)
+  u_timer:         present (timing_randomizer)
+  u_aes_core:      present (aes_core_hardened)
+  u_hw_monitor:    present (hamming_weight)
+  u_control_fsm:   present (control_fsm)
+  PASS: all 8 submodules instantiated
+
+[TEST 5] TRNG seed register
+  trng_seed_reg = 0xac (fallback: 0xAC)
+  PASS: seed register initialized
+
+===========================================================
+  ALL TESTS PASSED (structural only)
+
+  NOTE: Full UART encryption test requires entropy_valid=1.
+  In simulation, ring oscillators produce X, so the TRNG
+  validator never passes. Full functional verification
+  must happen on the Arty S7 FPGA hardware.
+
+  The AES encryption correctness is verified in:
+    sim/tb_aes_core_hardened.v (with simulated TRNG)
+===========================================================
+$finish called at time : 2305 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_hardened.v" Line 178

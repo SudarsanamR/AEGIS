@@ -1,0 +1,24 @@
+AEGIS Simulation Summary
+========================
+
+PASS  tb_aes_subbytes
+PASS  tb_aes_shiftrows
+PASS  tb_aes_mixcolumns
+PASS  tb_aes_addroundkey
+PASS  tb_aes_key_expansion
+PASS  tb_aes_core
+PASS  tb_hamming_weight
+PASS  tb_uart_tx
+PASS  tb_uart_rx
+PASS  tb_control_fsm
+PASS  tb_aes_subbytes_masked
+PASS  tb_aes_mixcolumns_masked
+PASS  tb_mask_refresh
+PASS  tb_aes_core_masked
+PASS  tb_ring_oscillator_trng
+PASS  tb_trng_validator
+PASS  tb_timing_randomizer
+PASS  tb_aes_core_hardened
+PASS  tb_aes_hardened
+
+Total: 19 passed, 0 failed

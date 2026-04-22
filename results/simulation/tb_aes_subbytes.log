@@ -1,0 +1,25 @@
+Time resolution is 1 ps
+========================================
+AES SubBytes Testbench
+========================================
+
+Test 1: Individual S-box Lookups
+  PASS: sbox[0x00] = 0x63
+  PASS: sbox[0xff] = 0x16
+  PASS: sbox[0x53] = 0xed
+
+Test 2: NIST Test Vector SubBytes
+  PASS: NIST vector SubBytes correct
+
+Test 3: Alternating Bits (0xAA, 0x55)
+  PASS: sbox[0xaa] = 0xac
+  PASS: sbox[0x55] = 0xfc
+
+Test 4: Mixed Byte Independence
+  PASS: Mixed byte substitution correct
+
+========================================
+ALL TESTS PASSED
+SubBytes module is verified and ready
+========================================
+$finish called at time : 70 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_aes_subbytes.v" Line 165

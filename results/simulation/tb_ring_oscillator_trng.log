@@ -1,0 +1,42 @@
+Time resolution is 1 ps
+===========================================================
+  AEGIS — tb_ring_oscillator_trng
+  Structural verification of Ring Oscillator TRNG
+===========================================================
+
+[TEST 1] Reset behavior
+  PASS: trng_valid deasserted during reset
+  PASS: sample_ctr is zero during reset
+
+[TEST 2] Counter increments after reset release
+  PASS: sample_ctr incrementing correctly
+
+[TEST 3] trng_valid pulse rate (expect 5 pulses in 500 clocks)
+  Observed 5 valid pulses in 500 clock cycles
+  PASS: valid pulse rate matches 1 MHz (100 cycle period)
+
+[TEST 4] trng_valid pulse width (expect exactly 1 cycle)
+  PASS: trng_valid pulse is exactly 1 clock wide
+
+[TEST 5] Counter wrap-around at 99
+  PASS: sample_ctr reached 99 after 99 cycles
+  PASS: sample_ctr wrapped to 0 after 100 cycles
+
+[TEST 6] Structural check — 8 ring oscillators present
+  PASS: osc_out bus is 8 bits (8 oscillators instantiated)
+  INFO: osc_out snapshot = xxxxxxxx (X expected in simulation)
+  INFO: osc_out = xxxxxxxx (X is expected in simulation)
+  INFO: xor_all = x (X is expected in simulation)
+  INFO: trng_bit = x (X is expected in simulation)
+
+[TEST 7] Reset mid-operation
+  PASS: mid-operation reset clears counter and valid
+
+===========================================================
+  ALL TESTS PASSED (structural verification)
+
+  NOTE: trng_bit output is X in simulation — this is
+  EXPECTED. Validate randomness on FPGA hardware using
+  trng_validator.v (Step 5.2).
+===========================================================
+$finish called at time : 7795 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_ring_oscillator_trng.v" Line 293

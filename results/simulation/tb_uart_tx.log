@@ -1,0 +1,12 @@
+Time resolution is 1 ps
+PASS [Idle after reset]: tx_pin=1
+PASS [0x55 alternating]: 0x55 transmitted correctly
+PASS [0xAA alternating]: 0xaa transmitted correctly
+PASS [0x00 all zeros]: 0x00 transmitted correctly
+PASS [0xFF all ones]: 0xff transmitted correctly
+PASS [0x0F NIST key byte]: 0x0f transmitted correctly
+─────────────────────────────────────
+Results: 6 PASSED, 0 FAILED
+ALL TESTS PASSED ✓
+─────────────────────────────────────
+$finish called at time : 5208996 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_uart_tx.v" Line 205

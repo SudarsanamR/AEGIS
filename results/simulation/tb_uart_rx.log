@@ -1,0 +1,15 @@
+Time resolution is 1 ps
+PASS [Idle check]: rx_valid correctly deasserted
+PASS [Glitch rejection]: short pulse correctly ignored
+PASS [0x55 alternating]: received 0x55 correctly
+PASS [0xAA alternating]: received 0xaa correctly
+PASS [0x00 all zeros]: received 0x00 correctly
+PASS [0xFF all ones]: received 0xff correctly
+PASS [0x0F NIST key byte]: received 0x0f correctly
+PASS [Back-to-back frame 1]: 0xA5 received correctly
+PASS [Back-to-back frame 2]: 0x5A received correctly
+─────────────────────────────────────
+Results: 9 PASSED, 0 FAILED
+ALL TESTS PASSED ✓
+─────────────────────────────────────
+$finish called at time : 7527035 ns : File "/home/sudar/Downloads/Project/AEGIS/sim/tb_uart_rx.v" Line 271
