@@ -8,36 +8,58 @@ AEGIS demonstrates a complete side-channel attack and defense lifecycle on FPGA.
 
 ## ⚡ Quick Start
 
-### Prerequisites (Ubuntu / Debian)
+### 1. Prerequisites
 
+#### Ubuntu / Debian (Linux)
 ```bash
-# Install Python 3 and pip if not already installed
+# Install Python 3, pip, and virtual environment tools
 sudo apt update
 sudo apt install -y python3 python3-pip python3-venv
 ```
 
+#### Windows
+1. Download and install [Python 3.x](https://www.python.org/downloads/). 
+2. **Crucial:** During installation, ensure the checkbox **"Add Python to PATH"** is selected.
+3. Open PowerShell or Command Prompt.
+
+### 2. Python Environment Setup
+
 ```bash
-# NOTE: Always run scripts with 'python' prefix — never run them directly
-# (e.g. python/attacks/dpa_attack.py alone will give "Permission denied")
-
-# 1. Create and activate the virtual environment
+# Navigate to the project directory
 cd aegis
+
+# Create a virtual environment
+# On Linux/macOS:
 python3 -m venv venv
+# On Windows:
+python -m venv venv
 
-source venv/bin/activate        # Linux / Ubuntu / macOS
-# venv\Scripts\activate         # Windows (PowerShell/CMD)
+# Activate the virtual environment
+# On Linux/macOS:
+source venv/bin/activate
+# On Windows (Command Prompt):
+venv\Scripts\activate.bat
+# On Windows (PowerShell):
+venv\Scripts\Activate.ps1
 
+# Install required dependencies
 pip install -r requirements.txt
+```
 
-# 2. Generate traces for all 3 designs (run ALL three before proceeding)
+### 3. Running the Python Simulation
+
+*Note: Always run scripts using the `python` prefix from the project root directory. Do not run them directly (e.g. `./python/attacks/dpa_attack.py`), as this may cause permission or path errors.*
+
+```bash
+# 1. Generate traces for all 3 designs (run ALL three before proceeding)
 python python/trace_collection/collect_traces.py --mode simulate  # Act 1: unmasked
 python python/trace_collection/simulate_masked.py                  # Act 2: masked
 python python/trace_collection/simulate_hardened.py                # Act 3: hardened
 
-# 3. Run the full demo (DPA + Neural on all designs)
+# 2. Run the full demo (DPA + Neural on all designs)
 python python/demo.py --design all --attack both
 
-# 4. Generate the 5-figure comparison suite
+# 3. Generate the 5-figure comparison suite
 python python/analysis/generate_all_plots.py
 ```
 
@@ -176,32 +198,72 @@ aegis/
 
 ### Verilog Testbenches
 
-#### Install Icarus Verilog (Ubuntu / Debian)
+You can simulate the Verilog hardware modules using either Vivado Simulator (recommended for graphical waveforms) or Icarus Verilog (recommended for fast, command-line testing).
+
+#### Option A: Vivado Simulator (Windows / Linux)
+1. Open Xilinx Vivado.
+2. Create a new project and add all files from `rtl/` and `sim/`.
+3. In the Tcl Console, set the top module for simulation:
+   ```tcl
+   set_property top tb_aes_core [get_filesets sim_1]
+   launch_simulation
+   ```
+4. Repeat for other testbenches in this sequence:
+   - `tb_aes_core_masked`
+   - `tb_aes_core_hardened`
+   - `tb_ring_oscillator_trng`
+   - `tb_timing_randomizer`
+   - `tb_aes_hardened` (Top-level integration)
+   
+   *(Note: The simulation automatically runs for 1000ns, which is enough for most testbenches to complete and print `ALL TESTS PASSED`. If a simulation needs more time, type `run all` in the Tcl Console).*
+
+#### Option B: Icarus Verilog (Command Line)
+
+**Installation (Ubuntu / Debian Linux):**
 ```bash
 sudo apt update
 sudo apt install -y iverilog
 ```
 
+**Installation (Windows):**
+1. Download the latest Windows binary from [Icarus Verilog for Windows](https://bleyer.org/icarus/).
+2. Install and ensure the installation directory (e.g., `C:\iverilog\bin`) is added to your system PATH.
+
+**Running Simulations:**
+Open your terminal in the project root and compile/run the modules:
 ```bash
-# Run all testbenches with Icarus Verilog (or Vivado Simulator)
-iverilog -o sim/tb_aes_core rtl/crypto/*.v sim/tb_aes_core.v && vvp sim/tb_aes_core
-iverilog -o sim/tb_trng sim/tb_ring_oscillator_trng.v rtl/countermeasures/ring_oscillator_trng.v && vvp sim/tb_trng
+# Test the Act 1 vulnerable core
+iverilog -o sim_core rtl/crypto/*.v sim/tb_aes_core.v
+vvp sim_core
+
+# Test the Act 2 masked core
+iverilog -o sim_masked rtl/crypto/*.v rtl/countermeasures/aes_subbytes_masked.v rtl/countermeasures/aes_mixcolumns_masked.v sim/tb_aes_core_masked.v
+vvp sim_masked
+
+# Test the TRNG
+iverilog -o sim_trng rtl/countermeasures/ring_oscillator_trng.v sim/tb_ring_oscillator_trng.v
+vvp sim_trng
 ```
 
-### Python Attacks
+### Python Side-Channel Attacks
 ```bash
-# Activate the virtual environment first (Ubuntu / Linux)
-source venv/bin/activate
+# Make sure your virtual environment is activated!
+# Windows: venv\Scripts\activate.bat
+# Linux: source venv/bin/activate
 
-# Full pipeline
-python python/trace_collection/collect_traces.py --mode simulate  # Act 1 traces
-python python/attacks/dpa_attack.py                                # DPA on unmasked
-python python/trace_collection/simulate_masked.py                  # Act 2 traces
-python python/attacks/generate_ml_dataset.py                       # ML dataset
-python python/attacks/train_mlp.py                                 # Train neural model
-python python/attacks/neural_attack.py                              # Neural on masked
-python python/trace_collection/simulate_hardened.py                 # Act 3 traces
-python python/analysis/generate_all_plots.py                        # Final 5-figure suite
+# 1. Baseline: Generate traces and run DPA on the unmasked core
+python python/trace_collection/collect_traces.py --mode simulate
+python python/attacks/dpa_attack.py
+
+# 2. Masking: Generate traces and train the Neural Network to break the mask
+python python/trace_collection/simulate_masked.py
+python python/attacks/generate_ml_dataset.py
+python python/attacks/train_mlp.py
+python python/attacks/neural_attack.py
+
+# 3. Hardened: Verify the hardened core resists both attacks
+python python/trace_collection/simulate_hardened.py
+python python/analysis/generate_all_plots.py
 ```
 
 ---
