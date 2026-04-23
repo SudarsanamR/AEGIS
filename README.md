@@ -1,7 +1,5 @@
 # AEGIS — Adaptive FPGA-Based Defense with Neural Resilience
 
-**ChipVerse '26 Hackathon Project**
-
 AEGIS demonstrates a complete side-channel attack and defense lifecycle on FPGA. Starting from a vulnerable AES-128 implementation, we progressively harden it with boolean masking, TRNG-sourced entropy, and randomized timing — then prove each countermeasure's effectiveness using classical DPA and neural network attacks.
 
 ---
@@ -48,8 +46,6 @@ pip install -r requirements.txt
 
 ### 3. Running the Python Simulation
 
-*Note: Always run scripts using the `python` prefix from the project root directory. Do not run them directly (e.g. `./python/attacks/dpa_attack.py`), as this may cause permission or path errors.*
-
 ```bash
 # 1. Generate traces for all 3 designs (run ALL three before proceeding)
 python python/trace_collection/collect_traces.py --mode simulate  # Act 1: unmasked
@@ -69,15 +65,15 @@ python python/analysis/generate_all_plots.py
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     AEGIS System Architecture                    │
-│                                                                  │
-│  Act 1: Vulnerable    Act 2: Masked        Act 3: Hardened       │
+│                     AEGIS System Architecture                   │
+│                                                                 │
+│  Act 1: Vulnerable    Act 2: Masked        Act 3: Hardened      │
 │  ┌──────────────┐    ┌──────────────┐     ┌──────────────────┐  │
 │  │  AES Core    │    │  AES Masked  │     │  AES Hardened    │  │
 │  │  (plaintext) │    │  (constant   │     │  (TRNG mask +    │  │
 │  │              │    │   mask 0xAC) │     │   timing jitter) │  │
 │  └──────┬───────┘    └──────┬───────┘     └──────┬───────────┘  │
-│         │                   │                    │               │
+│         │                   │                    │              │
 │    DPA breaks it      DPA fails,            Both DPA and        │
 │    in ~200 traces     NN succeeds           NN fail entirely    │
 └─────────────────────────────────────────────────────────────────┘
@@ -124,7 +120,7 @@ aegis/
 │       └── aes_hardened.v        #     Act 3 top (UART + all countermeasures)
 ├── sim/                          # Testbenches (20 files, self-checking)
 ├── constraints/                  # Vivado XDC for Arty S7
-│   └── arty_s7.xdc              #   Clock, UART, LEDs, TRNG Pblock
+│   └── arty_s7.xdc               #   Clock, UART, LEDs, TRNG Pblock
 ├── python/                       # Analysis & attack framework
 │   ├── analysis/                 #   Shared utilities & visualization
 │   │   ├── aes_utils.py          #     S-Box, HW model, software AES
@@ -145,11 +141,11 @@ aegis/
 ├── docs/                         # Project documentation
 │   └── architecture.md           #   Detailed architecture & security analysis
 ├── f4pga/                        # Open-source synthesis (Yosys)
-│   ├── synth_vulnerable.ys      #   Yosys script — Act 1 AES
-│   ├── synth_hardened.ys        #   Yosys script — Act 3 AES
-│   ├── synth_yosys.sh           #   Shell wrapper
-│   ├── Makefile                 #   Build automation
-│   └── README.md                #   F4PGA setup guide
+│   ├── synth_vulnerable.ys       #   Yosys script — Act 1 AES
+│   ├── synth_hardened.ys         #   Yosys script — Act 3 AES
+│   ├── synth_yosys.sh            #   Shell wrapper
+│   ├── Makefile                  #   Build automation
+│   └── README.md                 #   F4PGA setup guide
 ├── traces/                       # Generated trace data (.npy)
 ├── results/                      # Attack results & plots (.png)
 ├── instructions.txt              # Original project specification
@@ -302,7 +298,3 @@ Use Vivado for actual FPGA deployment with TRNG.
 See [`f4pga/README.md`](f4pga/README.md) for full setup instructions.
 
 ---
-
-## 📄 License
-
-Academic project for ChipVerse '26. All code is original work.
