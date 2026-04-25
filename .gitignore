@@ -22,10 +22,7 @@ venv/
 *.npy
 *.pth
 
-# Results - ignore generated plots, keep simulation logs
-results/*.png
-results/final_demo/
-results/demo/
+# Results - keep generated plots and simulation logs
 !results/simulation/
 !results/simulation/*.log
 !results/simulation/SUMMARY.txt
